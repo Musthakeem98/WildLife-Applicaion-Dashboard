@@ -1,0 +1,43 @@
+{
+  "officerId": "S123",
+  "name": "Kamal Jathushan",
+  "email": "supervisor.officer@example.com",
+  "address": "123 Supervisor Street",
+  "type": "supervisor",
+  "telNumber": 5555555555,
+  "nic": "S123456789",
+  "password": "password"
+}
+{
+  "officerId": "A123",
+  "name": "Admin Officer",
+  "email": "admin.officer@example.com",
+  "address": "123 Admin Street",
+  "type": "admin",
+  "telNumber": 9876543210,
+  "nic": "A123456789",
+  "password": "password"
+}
+{
+  "officerId": "B124",
+  "name": "Anjula",
+  "email": "beta.officer2@example.com",
+  "address": "456 Beta Street",
+  "type": "beta",
+  "telNumber": 1112223333,
+  "nic": "B987654321",
+  "password": "password"
+}
+
+{
+  "officerId": "B125",
+  "name": "Mohameed",
+  "email": "beta.officer3@example.com",
+  "address": "789 Beta Street",
+  "type": "beta",
+  "telNumber": 4445556666,
+  "nic": "B123654789",
+  "password": "password"
+}
+
+
