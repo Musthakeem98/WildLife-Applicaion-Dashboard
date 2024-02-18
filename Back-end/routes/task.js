@@ -38,6 +38,28 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/changestate/:id', async (req, res) => {
+  
+  try {
+    // Update the status in the complaint table
+    const updatedComplaint = await ComplainSchema.findOneAndUpdate(
+      { complaintId: req.params.id },
+      { $set: { status: 'close' } },
+      { new: true }
+    );
+    console.log("updatedComplaint : ", updatedComplaint)
+
+    // Check if the status was actually changed
+    if (updatedComplaint && updatedComplaint.status === 'close') {
+      res.status(201).json({ success: true, message: 'Status updated successfully' });
+    } else {
+      res.status(400).json({ success: false, message: 'Status not updated' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 // Get all task
 router.get('/', async (req, res) => {

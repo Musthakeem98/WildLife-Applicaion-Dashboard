@@ -5,6 +5,7 @@ import Axios from 'axios';
 import FormModal from './openComplaints/components/FormModal';
 import { useRouter } from 'next/navigation'
 import ViewFormModal from './progressComplaints/ViewFormModal';
+import '../../styles/adminofficer.css'
 
 const isAuthenticated = () => {
   const userData = sessionStorage.getItem('userData');
@@ -52,6 +53,7 @@ const AdministratorPage: React.FC = () => {
       // If not authenticated, redirect to the login page and show a message
       router.push('/login');
     } else {
+      console.log("working")
       Axios.get("http://localhost:3000/complaints/getstate/open")
         .then((response) => setOpenComplaints(response.data))
         .catch((error) => console.error('Error fetching data:', error));
@@ -76,6 +78,7 @@ const AdministratorPage: React.FC = () => {
     setFormData(data); // Set form data based on the selected data
     setIsModalOpen(true);
     setTaskId(data.id)
+    console.log("responce : ", openComplaints )
   };
   const viewModelFunction = (data:any) =>{
     setIsViewOpen(true)
@@ -112,73 +115,99 @@ const AdministratorPage: React.FC = () => {
     // Redirect to the login page or any other desired location
     router.push("/login");
   };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+  
+    const day = date.getDate();
+    const suffix = getDaySuffix(day);
+  
+    return formattedDate.replace(/\b(\d{1,2})\b/, `$1${suffix}`);
+  };
+  
+  const getDaySuffix = (day:any) => {
+    if (day >= 11 && day <= 13) {
+      return 'th';
+    }
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
+
   return (
-    <div className="flex flex-col h-screen p-4">
-      <div className="flex justify-between items-center mb-8">
-        <div className="text-left">
-          <p className="text-lg">Hey {user?.name}</p>
-          <div className="flex items-center">
-            <p className="text-md">Administrator - {user?.id}</p>
-            <div className="w-4"></div>
-            <p className="text-md text-gray-500">{user?.divistion} Division</p>
+    <div className="dashboard-container">
+      <div className="header-section">
+        <div className="user-info">
+          <p className="user-greeting">Hey {user?.name}</p>
+          <div className="user-details">
+            <p className="user-role">Administrator - {user?.id}</p>
+            <div className="spacer"></div>
+            <p className="user-division">{user?.divistion} Division</p>
           </div>
         </div>
-        <div className="flex space-x-4">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded">Profile Edit</button>
-          <button className="bg-gray-500 text-white px-4 py-2 rounded">Manage Officers</button>
-          <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={()=> handleSignOut()}>Sign Out</button>
+        <div className="action-buttons">
+          <button className="profile-edit-button">Profile Edit</button>
+          <button className="manage-officers-button">Manage Officers</button>
+          <button className="signout-button" onClick={()=> handleSignOut()}>Sign Out</button>
         </div>
       </div>
-      <div className="flex justify-end px-2 items-center">
-        <p className="text-md mr-2">Filter by:</p>
+      {/* <div className="filter-section">
+        <p className="filter-label">Filter by:</p>
         <Dropdown options={dropdownOptions} onSelect={handleSelect1} />
-        <div className="w-4"></div>
-      </div>
-      <div className="p-4"></div>
-      <div className="flex space-x-4">
-        <div className="bg-gray-200 p-4 rounded flex-1">
-          <h2 className="text-lg font-semibold">Opened Complaints</h2>
+      </div> */}
+      <div className="complaints-section">
+        <div className="complaints-column">
+          <h2 className="section-heading">Opened Complaints</h2>
           {openComplaints.map((item, index) => (
-            <div key={index} className="bg-white p-4 mt-4 rounded flex justify-between items-center">
-              <div className="flex flex-col">
-                <p>{item.data && typeof item.data === 'string' && new Date(item.data).toLocaleDateString()}</p>
-                <p className="f-5 font-semibold">{item.description}</p>
+            <div key={index} className="complaint-card">
+              <div className="complaint-details">
+              <p className='date'>
+                {item.createdAt && formatDate(item.createdAt)}
+              </p>
+                <p className="complaint-description">{item.description}</p>
               </div>
-              <button onClick={() => openModalFunction(item)} className="bg-blue-500 text-white px-2 py-1 rounded">
+              <button onClick={() => openModalFunction(item)} className="action-button open-button">
                 Open
               </button>
             </div>
           ))}
         </div>
-
-        {/* In Progress Complaints */}
-        <div className="bg-gray-200 p-4 rounded flex-1">
-          <h2 className="text-lg font-semibold">In Progress Complaints</h2>
+        <div className="complaints-column">
+          <h2 className="section-heading">In Progress Complaints</h2>
           {progressComplaints.map((item, index) => (
-            <div key={index} className="bg-white p-4 mt-4 rounded flex justify-between items-center">
-              <div className="flex flex-col">
-                <button className="bg-green-500 text-white px-2 py-1 rounded mb-2 opacity-75">Assign</button>
-                <p className="text-lg">{item.data && typeof item.data === 'string' && new Date(item.data).toLocaleDateString()}</p>
-                <p className="text-lg font-semibold">{item.description}</p>
-                <p className="">Assigned To: {item.assignedTo}</p>
+            <div key={index} className="complaint-card-assgine">
+              <div className="complaint-details">
+              <div className='coloum-container'>
+                <div className="assign-text">ASSIGNED</div>
+                  <p className='date'>
+                    {item.createdAt && formatDate(item.createdAt)}
+                  </p>
+                </div>
+                <p className="complaint-description">{item.description}</p>
+                <p className='assigened-text'>Assigned To: {item.assignedTo}</p>
               </div>
-              <button onClick={() => viewModelFunction(item)} className="bg-blue-500 text-white px-2 py-1 rounded">
+              <button onClick={() => viewModelFunction(item)} className="action-button view-button">
                 View
               </button>
             </div>
           ))}
         </div>
-
-        {/* In Review Complaints */}
-        <div className="bg-gray-200 p-4 rounded flex-1">
-          <h2 className="text-lg font-semibold">In Review Complaints</h2>
+        <div className="complaints-column">
+          <h2 className="section-heading">In Review Complaints</h2>
           {reviewComplaints.map((item, index) => (
-            <div key={index} className="bg-white p-4 mt-4 rounded flex justify-between items-center">
-              <div className="flex flex-col">
-                <p className="text-lg">{item.data && typeof item.data === 'string' && new Date(item.data).toLocaleDateString()}</p>
-                <p className="text-lg font-semibold">{item.description}</p>
+            <div key={index} className="complaint-card">
+              <div className="complaint-details">
+              <p className='date'>
+                {item.createdAt && formatDate(item.createdAt)}
+              </p>
+                <p className="complaint-description">{item.description}</p>
               </div>
-              <button onClick={() => viewModelFunction(item)} className="bg-blue-500 text-white px-2 py-1 rounded">
+              <button onClick={() => viewModelFunction(item)} className="action-button view-button">
                 View
               </button>
             </div>
@@ -189,6 +218,7 @@ const AdministratorPage: React.FC = () => {
       {isViewOpen && <ViewFormModal isOpen={isViewOpen} onClose={closeViewModel} complaints = {formData} />}
     </div>
   );
+  
 };
 
 export default AdministratorPage;

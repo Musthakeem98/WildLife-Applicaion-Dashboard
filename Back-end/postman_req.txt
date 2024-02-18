@@ -133,7 +133,7 @@
     "additionalInfo": "Near the waterfall"
   },
   "evidences": "URL or base64 encoded image",
-  "status": 0,
+  "status": "open",
   "complaintNote": "Urgent action needed",
   "data": "2024-02-20"
 }

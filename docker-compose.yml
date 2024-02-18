@@ -6,7 +6,7 @@ services:
     container_name: mongodb
     ports:
       - "27019:27017"
+    restart: always  
     volumes:
-      - /projects/Esoft/WildLifeApp/db_backup:/data/db  
-
+      - /projects/Esoft/WildLife-Applicaion-Dashboard/db_backup:/data/db
 

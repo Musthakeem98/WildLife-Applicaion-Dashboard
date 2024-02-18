@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
+import '../../styles/login.css'
 
 interface LoginResponse {
   type: any;
@@ -16,6 +17,7 @@ const LoginPage = () => {
   const [officerId, setOfficerId] = useState('');
   const [password, setPassword] = useState('');
   const [loginMessage, setLoginMessage] = useState(''); 
+  const [isMsgShow, setMsgShow] = useState(false)
   const router = useRouter();
 
   const handleDepartmentChange = (department: React.SetStateAction<string>) => {
@@ -23,6 +25,7 @@ const LoginPage = () => {
   };
  
   const handleLogin = async () => {
+    setMsgShow(true)
     try {
       // Send the plain-text password to the server for hashing
       const response = await axios.post<LoginResponse>('http://localhost:3000/officerLogin/authenticate', {
@@ -57,46 +60,46 @@ const LoginPage = () => {
 
 
   return (
-    <div className="flex justify-between items-center h-screen p-4">
-      <div className="w-1/2">
-        <Image src="/your-image.jpg" alt="Your Image" width={300} height={300} />
+    <div className="login-container">
+      <div className="image-container">
+        <img src="/Images/Login.png" alt="Login Image"/>
+        <div className="image-text">WILDLIFE APP</div>
       </div>
-      <div className="w-1/2 p-8 border border-gray-300 rounded">
-        <h1 className="text-4xl font-bold mb-4">Nice to see you!</h1>
-        <p className="mb-4">Choose your department and enter the credentials:</p>
-        <div className="flex mb-4">
-          <button
-            className={`flex-1 p-2 border ${selectedDepartment === 'forest' ? 'bg-green-500 text-white' : ''}`}
-            onClick={() => handleDepartmentChange('forest')}
-          >
-            Forest Reserve
-          </button>
-          <button
-            className={`flex-1 p-2 border ${selectedDepartment === 'wildlife' ? 'bg-green-500 text-white' : ''}`}
-            onClick={() => handleDepartmentChange('wildlife')}
-          >
-            Wildlife Department
-          </button>
-        </div>
-        <div className="flex flex-col gap-4">
-          <label className="flex flex-col">
-            Office ID:
-            <input value={officerId} onChange={(e) => setOfficerId(e.target.value)} type="text" name="officeId" className="border p-2" />
-          </label>
-          <label className="flex flex-col">
-            Password:
-            <input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" name="password" className="border p-2" />
-          </label>
-          <button onClick={() => handleLogin()} type="button" className="bg-blue-500 text-white p-2 rounded">
-            Login
-          </button>
-          <p className={`text-center text-lg mt-4 p-2 ${loginMessage.includes('successful') ? 'bg-green-100 text-green-800 rounded' : 'bg-red-100 text-red-800 rounded'}`}>
-            {loginMessage}
-          </p>
+      <div className="login-form">
+        <div className="middle-container">
+        <h1 className="heading">Nice to see you!</h1>
+        <p className="sub-heading">Choose your department and enter the credentials:</p>
+          <div className="department-buttons">
+            <button
+              className={`department-button ${selectedDepartment === 'forest' ? 'selected' : ''}`}
+              onClick={() => handleDepartmentChange('forest')}
+            >
+              Forest Reserve
+            </button>
+            <button
+              className={`department-button ${selectedDepartment === 'wildlife' ? 'selected' : ''}`}
+              onClick={() => handleDepartmentChange('wildlife')}
+            >
+              Wildlife Department
+            </button>
+          </div>
+          <div className="input-fields">
+              <input value={officerId} onChange={(e) => setOfficerId(e.target.value)} type="text" name="officeId" className="input-field" placeholder="Enter your officer ID" />
+              <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" name="password" className="input-field" placeholder="Enter your Password"/>
+            <button onClick={() => handleLogin()} type="button" className="login-button">
+              Sigin
+            </button>
+            {isMsgShow && (
+            <div>
+            <p className={`login-message ${loginMessage.includes('successful') ? 'success' : 'error'}`}>
+              {loginMessage}
+            </p>
+            </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
+  }  
 export default LoginPage;

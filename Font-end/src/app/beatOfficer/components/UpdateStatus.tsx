@@ -63,7 +63,7 @@ const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({ isOpen, onClose, 
 
   const handleUpdateStatusSubmit = async () => {
     console.log("Complaine : ", complaints, "ID : ", complaints?._id, "complainId :",complaints?.complaintId )
-    axios.get(`http://localhost:3000/changestate/${complaints?.complaintId}`)
+    axios.get(`http://localhost:3000/task/changestate/${complaints?.complaintId}`)
     .then((response) => setResponce(response.data))
     .catch((error) => console.error('Error fetching data:', error));
 

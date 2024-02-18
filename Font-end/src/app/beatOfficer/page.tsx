@@ -5,6 +5,7 @@ import Axios from 'axios';
 // import FormModal from './openComplaints/components/FormModal';
 import { useRouter } from 'next/navigation'
 import FormModal from './components/FormModal';
+import '../../styles/betaofficer.css'
 // import ViewFormModal from './progressComplaints/ViewFormModal';
 
 const isAuthenticated = () => {
@@ -60,7 +61,7 @@ const BeatOfficer: React.FC = () => {
   };
 
   const openModalFunction = (data: any) => {
-    setFormData(data); // Set form data based on the selected data
+    setFormData(data);
     setIsModalOpen(true);
     setTaskId(data.id)
   };
@@ -93,63 +94,63 @@ const BeatOfficer: React.FC = () => {
     // Redirect to the login page or any other desired location
     router.push("/login");
   };
+
+  const handleProfileEdit = () => {
+    // Clear the session storage or any authentication token
+  };
   return (
-    <div className="flex flex-col h-screen p-4">
-      <div className="flex justify-between items-center mb-8">
-        <div className="text-left">
-          <p className="text-lg">Hey {user?.name}</p>
-          <div className="flex items-center">
-            <p className="text-md">Officer - {user?.id}</p>
-            <div className="w-4"></div>
-            <p className="text-md text-gray-500">{user?.divistion} Division</p>
+    <div className="dashboard-container">
+      <div className="header-section">
+        <div className="user-info">
+          <p className="user-greeting">Hey {user?.name}</p>
+          <div className="user-details">
+            <p className="user-role">Officer - {user?.id}</p>
+            <div className="spacer"></div>
+            <p className="user-division">{user?.divistion} Division</p>
           </div>
         </div>
-        <div className="flex space-x-4">
-
-          <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={()=> handleSignOut()}>Sign Out</button>
+        <div className="action-buttons">
+          <button className="profile-edit-button  " onClick={()=> handleProfileEdit()}>Profile Edit</button>
+          <button className="signout-button" onClick={()=> handleSignOut()}>Sign Out</button>
         </div>
       </div>
-      <div className="flex justify-end px-2 items-center">
-        <div className="w-4"></div>
-      </div>
-      <div className="p-4"></div>
-      <div className="flex space-x-4">
-        <div className="bg-gray-200 p-4 rounded flex-1">
-          <h2 className="text-lg font-semibold">Assigned Complaints</h2>
-          {progressComplaints.map((item, index) => (
-            <div key={index} className="bg-white p-4 mt-4 rounded flex justify-between items-center">
-              <div className="flex flex-col">
-                <p>{item.data && typeof item.data === 'string' && new Date(item.data).toLocaleDateString()}</p>
-                <p className="f-5 font-semibold">{item.description}</p>
+      <div className="content-section">
+        <div className="spacer"></div>
+        <div className="complaints-section">
+          <div className="assigned-complaints">
+            <h2 className="section-heading">Assigned Complaints</h2>
+            {progressComplaints.map((item, index) => (
+              <div key={index} className="complaint-card">
+                <div className="complaint-details">
+                  <p>{item.data && typeof item.data === 'string' && new Date(item.data).toLocaleDateString()}</p>
+                  <p className="complaint-description">{item.description}</p>
+                </div>
+                <button onClick={() => openModalFunction(item)} className="action-button open-button">
+                  Open
+                </button>
               </div>
-              <button onClick={() => openModalFunction(item)} className="bg-blue-500 text-white px-2 py-1 rounded">
-                Open
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* In Review Complaints */}
-        <div className="bg-gray-200 p-4 rounded flex-1">
-          <h2 className="text-lg font-semibold">Closed Complaints</h2>
-          {reviewComplaints.map((item, index) => (
-            <div key={index} className="bg-white p-4 mt-4 rounded flex justify-between items-center">
-              <div className="flex flex-col">
-                <p className="text-lg">{item.data && typeof item.data === 'string' && new Date(item.data).toLocaleDateString()}</p>
-                <p className="text-lg font-semibold">{item.description}</p>
+            ))}
+          </div>
+          <div className="closed-complaints">
+            <h2 className="section-heading">Closed Complaints</h2>
+            {reviewComplaints.map((item, index) => (
+              <div key={index} className="complaint-card">
+                <div className="complaint-details">
+                  <p>{item.data && typeof item.data === 'string' && new Date(item.data).toLocaleDateString()}</p>
+                  <p className="complaint-description">{item.description}</p>
+                </div>
+                <button onClick={() => viewModelFunction(item)} className="action-button view-button">
+                  View
+                </button>
               </div>
-              <button onClick={() => viewModelFunction(item)} className="bg-blue-500 text-white px-2 py-1 rounded">
-                View
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    
-    {isModalOpen && <FormModal isOpen={isModalOpen} onClose={closeModal} complaints = {formData} />}
-    {/* {isViewOpen && <ViewFormModal isOpen={isViewOpen} onClose={closeViewModel} complaints = {formData} />} */}
+      {isModalOpen && <FormModal isOpen={isModalOpen} onClose={closeModal} complaints = {formData} />}
     </div>
   );
+  
 };
 
 export default BeatOfficer;
