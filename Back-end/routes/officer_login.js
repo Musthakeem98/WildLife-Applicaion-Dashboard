@@ -66,7 +66,7 @@ router.get('/', async (req, res) => {
 });
 
 // DELETE: Remove an officer by ID
-router.delete('/:officerId', async (req, res) => {
+router.delete('/delete/:officerId', async (req, res) => {
     try {
       const deletedOfficer = await Officer.findOneAndDelete({ officerId: req.params.officerId });
   
@@ -94,5 +94,52 @@ router.delete('/:officerId', async (req, res) => {
       res.status(500).json(error);
     }
   })
+
+  router.get('/:id', async (req,res) => {
+    try {
+      const id = req.params.id;
+      const response = await Officer.findOne({officerId: id})
+      if (!response) {
+        return res.status(404).json({ success: false, message: 'No any officer' });
+      }
+      const officerDetails = {
+        officerId: response.officerId,
+        name: response.name,
+        email: response.email,
+        address: response.address,
+        telNumber: response.telNumber,
+        nic: response.nic
+      };
+      res.status(200).json({  officerDetails });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json(error);
+    }
+  })
+
+  router.post('/update', async (req, res) => {
+    try {
+      const filter = { officerId: req.body.officerId }; 
+      const update = {
+        officerId: req.body.officerId,
+        name: req.body.name,
+        email: req.body.email,
+        address: req.body.address,
+        telNumber: req.body.telNumber
+      };
+
+      const updatedOfficer = await Officer.findOneAndUpdate(filter, update, { new: true });
+  
+      if (!updatedOfficer) {
+        return res.status(404).json({ success: false, message: 'Officer not found' });
+      }
+  
+      res.status(200).json({ success: true, officer: updatedOfficer });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });
+  
 
 module.exports = router;

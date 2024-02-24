@@ -73,7 +73,7 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
           display="flex"
           justifyContent="center"
           alignItems="center"
-          bgcolor="#9696FD" 
+          bgcolor="#1E7222" 
           color="white"
           height={50}
           width={150}
@@ -127,13 +127,13 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
         />
       </DialogContent>
       <DialogActions style={{ flexDirection: 'column' }}>
-        <Button onClick={onClose} color="primary" variant="outlined" fullWidth>
+        <Button onClick={onClose} style = { {color: '#4CAF50', borderColor: '#4CAF50'}} variant="outlined" fullWidth>
           Close
         </Button>
-        <Button onClick={openUpdateStatusModal} variant="contained" color="primary" fullWidth style={{ marginTop: '8px' }}>
+        <Button onClick={openUpdateStatusModal} variant="contained" style = { {color: '#4CAF50', borderColor: '#4CAF50', marginTop: '8px'}} fullWidth >
           Update Status
         </Button>
-        <Button onClick={openShowHistoryModal} color="secondary" variant="outlined" fullWidth style={{ marginTop: '8px' }}>
+        <Button onClick={openShowHistoryModal} style = { {color: '#4CAF50', borderColor: '#4CAF50',marginTop: '8px'}} variant="outlined" fullWidth >
           Show History
         </Button>
       </DialogActions>

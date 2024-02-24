@@ -65,7 +65,7 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
   const getStatusColor = () => {
     switch (complaints.status) {
       case "progress": 
-        return '#D0D004'; 
+        return '#4CAF50'; 
       case "review": 
         return '#CA96FD'; 
       default:
@@ -83,8 +83,10 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
           alignItems="center"
           bgcolor={getStatusColor()} // Dynamic background color based on status
           color="white"
-          height={50}
-          width={150}
+          height={30}
+          width={120}
+          fontSize={12}
+          fontFamily={"Roboto"}
           marginBottom={1}
           style={{
             paddingLeft: '16px',      // Add left padding
@@ -135,7 +137,7 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
         />
       </DialogContent>
       <DialogActions style={{ flexDirection: 'column' }}>
-        <Button onClick={onClose} color="primary" variant="outlined" fullWidth>
+        <Button onClick={onClose} style = { {color: '#4CAF50', borderColor: '#4CAF50'}} variant="outlined" fullWidth>
           Close
         </Button>
       </DialogActions>

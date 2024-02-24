@@ -6,6 +6,7 @@ import FormModal from './openComplaints/components/FormModal';
 import { useRouter } from 'next/navigation'
 import ViewFormModal from './progressComplaints/ViewFormModal';
 import '../../styles/adminofficer.css'
+import ProfileFormModal from '../../components/editProfile/ViewFormModal';
 
 const isAuthenticated = () => {
   const userData = sessionStorage.getItem('userData');
@@ -46,7 +47,33 @@ const AdministratorPage: React.FC = () => {
   const [progressComplaints, setProgressComplaints] = useState<Array<any>>([]);
   const router = useRouter();
   const user = getUserData();
+  const [isProfileEditEnable, setProfileEditEnable] = useState(false)
+  const [userDetails, setUserDetails] = useState({
+    name: '',
+    email: '',
+    telNumber:'',
+    address: '',
+    password:'',
+    nic: '',
+    officerId: ''
+  });
 
+
+  useEffect(() => {
+    const id = user?.id
+    Axios.get(`http://localhost:3000/officerLogin/${id}`)
+        .then((response) => setUserDetails(response.data.officerDetails))
+        .catch((error) => console.error('Error fetching data:', error));
+  })
+
+  const editviewClose =() => {
+    setProfileEditEnable(false)
+  }
+
+  const handleProfileEdit = () => {
+    setProfileEditEnable(true)
+    console.log("edit profile opened")
+  }
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -151,7 +178,7 @@ const AdministratorPage: React.FC = () => {
           </div>
         </div>
         <div className="action-buttons">
-          <button className="profile-edit-button">Profile Edit</button>
+          <button className="profile-edit-button" onClick={() =>handleProfileEdit()}>Profile Edit</button>
           <button className="manage-officers-button">Manage Officers</button>
           <button className="signout-button" onClick={()=> handleSignOut()}>Sign Out</button>
         </div>
@@ -216,6 +243,7 @@ const AdministratorPage: React.FC = () => {
       </div>
       {isModalOpen && <FormModal isOpen={isModalOpen} onClose={closeModal} complaints = {formData} />}
       {isViewOpen && <ViewFormModal isOpen={isViewOpen} onClose={closeViewModel} complaints = {formData} />}
+      {isProfileEditEnable && <ProfileFormModal isOpen={isProfileEditEnable} onClose={editviewClose} userData = {userDetails} />}
     </div>
   );
   

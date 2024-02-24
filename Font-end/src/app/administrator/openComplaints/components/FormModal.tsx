@@ -73,14 +73,14 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
           display="flex"
           justifyContent="center"
           alignItems="center"
-          bgcolor="#9696FD" 
+          bgcolor="#1E7222" 
           color="white"
           height={50}
           width={150}
           marginBottom={1}
           style={{
-            paddingLeft: '16px',      // Add left padding
-            borderRadius: '30px',    // Add rounded borders
+            paddingLeft: '16px',    
+            borderRadius: '30px',    
           }}
           onClick={openUpdateStatusModal}  // Open the update status modal on click
         >

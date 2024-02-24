@@ -6,6 +6,7 @@ import Axios from 'axios';
 import { useRouter } from 'next/navigation'
 import FormModal from './components/FormModal';
 import '../../styles/betaofficer.css'
+import ProfileFormModal from '../../components/editProfile/ViewFormModal';
 // import ViewFormModal from './progressComplaints/ViewFormModal';
 
 const isAuthenticated = () => {
@@ -37,8 +38,34 @@ const BeatOfficer: React.FC = () => {
   const [progressComplaints, setProgressComplaints] = useState<Array<any>>([]);
   const router = useRouter();
   const user = getUserData();
+  const [isProfileEditEnable, setProfileEditEnable] = useState(false)
+  const [userDetails, setUserDetails] = useState({
+    name: '',
+    email: '',
+    telNumber:'',
+    address: '',
+    password:'',
+    nic: '',
+    officerId: ''
+  });
 
 
+  useEffect(() => {
+    const id = user?.id
+    Axios.get(`http://localhost:3000/officerLogin/${id}`)
+        .then((response) => setUserDetails(response.data.officerDetails))
+        .catch((error) => console.error('Error fetching data:', error));
+  })
+
+
+  const editviewClose =() => {
+    setProfileEditEnable(false)
+  }
+
+  const handleProfileEdit = () => {
+    setProfileEditEnable(true)
+    console.log("edit profile opened")
+  }
   useEffect(() => {
     if (!isAuthenticated()) {
       // If not authenticated, redirect to the login page and show a message
@@ -95,9 +122,6 @@ const BeatOfficer: React.FC = () => {
     router.push("/login");
   };
 
-  const handleProfileEdit = () => {
-    // Clear the session storage or any authentication token
-  };
   return (
     <div className="dashboard-container">
       <div className="header-section">
@@ -110,7 +134,7 @@ const BeatOfficer: React.FC = () => {
           </div>
         </div>
         <div className="action-buttons">
-          <button className="profile-edit-button  " onClick={()=> handleProfileEdit()}>Profile Edit</button>
+          <button className="profile-edit-button  " onClick={() =>handleProfileEdit()}>Profile Edit</button>
           <button className="signout-button" onClick={()=> handleSignOut()}>Sign Out</button>
         </div>
       </div>
@@ -148,6 +172,8 @@ const BeatOfficer: React.FC = () => {
         </div>
       </div>
       {isModalOpen && <FormModal isOpen={isModalOpen} onClose={closeModal} complaints = {formData} />}
+      {isViewOpen && <FormModal isOpen={isViewOpen} onClose={closeModal} complaints = {formData} />}
+      {isProfileEditEnable && <ProfileFormModal isOpen={isProfileEditEnable} onClose={editviewClose} userData = {userDetails} />}
     </div>
   );
   
