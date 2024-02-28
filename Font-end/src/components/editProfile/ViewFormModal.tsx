@@ -33,6 +33,13 @@ interface FormModalProps {
   const [telNumber, setTelNumber] = useState(userData.telNumber);
   const [address, setAddress] = useState(userData.address);
   const [isSuccess, setSuccess] = useState(false)
+  const [isDataChanged, setDataChanged] = useState(false); // Track if data has changed
+
+  useEffect(() => {
+    // Check if any data has changed
+    const hasDataChanged = name !== userData.name || email !== userData.email || telNumber !== userData.telNumber || address !== userData.address;
+    setDataChanged(hasDataChanged);
+  }, [name, email, telNumber, address, userData]);
 
   const exampleStatusHistory = [
     { label: 'Label1', date: '2022-01-01', status: 'Opened' },
@@ -124,9 +131,18 @@ interface FormModalProps {
         />
       </DialogContent>
       <DialogActions style={{ flexDirection: 'column' }}>
-      <Button onClick={openUpdateStatusModal} variant="contained"  fullWidth style={{ margin: '10px', backgroundColor:'#4CAF50' }}>
-          Update Status
-        </Button>
+      <Button
+        onClick={openUpdateStatusModal}
+        variant="contained"
+        fullWidth
+        style={{
+          margin: '10px',
+          backgroundColor: isDataChanged ? '#4CAF50' : '#CCCCCC',
+        }}
+        disabled={!isDataChanged} 
+      >
+        Update Status
+      </Button>
         <Button onClick={onClose} style = { {color: '#4CAF50',margin: '10px',marginTop:"1px", borderColor: '#4CAF50'}} variant="outlined" fullWidth>
           Close
         </Button>

@@ -5,6 +5,7 @@ import Axios from 'axios';
 // import FormModal from './openComplaints/components/FormModal';
 import { useRouter } from 'next/navigation'
 import FormModal from './components/FormModal';
+import ViewModel from './components/onlyView/FormModal'
 import '../../styles/betaofficer.css'
 import ProfileFormModal from '../../components/editProfile/ViewFormModal';
 // import ViewFormModal from './progressComplaints/ViewFormModal';
@@ -100,6 +101,7 @@ const BeatOfficer: React.FC = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsViewOpen(false)
     
   };
   const closeViewModel =() => {
@@ -172,7 +174,7 @@ const BeatOfficer: React.FC = () => {
         </div>
       </div>
       {isModalOpen && <FormModal isOpen={isModalOpen} onClose={closeModal} complaints = {formData} />}
-      {isViewOpen && <FormModal isOpen={isViewOpen} onClose={closeModal} complaints = {formData} />}
+      {isViewOpen && <ViewModel isOpen={isViewOpen} onClose={closeModal} complaints = {formData} />}
       {isProfileEditEnable && <ProfileFormModal isOpen={isProfileEditEnable} onClose={editviewClose} userData = {userDetails} />}
     </div>
   );

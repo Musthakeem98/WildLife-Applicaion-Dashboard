@@ -1,0 +1,46 @@
+.officer-item {
+  display: flex;
+  align-items: center;
+  background: #03340a;
+  ;
+  padding: 10px; 
+  padding-left: 25px;
+  border-radius: 15px; 
+  margin-bottom: 10px;
+  height: 100px;
+  width: 390px;
+}
+
+.officer-details {
+  flex-grow: 1;
+  margin-bottom: 5px;
+  color: #A0C0A2;
+  font-family: Roboto;
+  font-size: 14px;
+}
+
+.name {
+  color: #FFFFFF;
+  font-family: Roboto;
+  font-size: 18px;
+}
+
+/* Adjust button styles as needed */
+.button {
+  margin-left: auto; 
+  width: 100px;
+  height: 40px;
+  padding: 0px, 30px, 0px, 30px;
+  border-radius: 10px;
+  background-color: rgba(68, 88, 69, 1);
+  color: rgba(222, 248, 223, 1);
+  font-family: Roboto;
+  font-size: 14px;
+}
+
+.heading{
+  font-family: Roboto;
+  font-size: 24px;
+  color:rgb(11, 36, 4);
+  ;
+}

@@ -7,9 +7,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import UpdateStatusModal from './UpdateStatus'; // Import the new component
-import ShowHistory from './ShowHistory';
-import { Box } from '@mui/material';
+
 
 interface Complaint {
   complaintId: string;
@@ -127,17 +125,10 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
         />
       </DialogContent>
       <DialogActions style={{ flexDirection: 'column' }}>
-        <Button onClick={onClose} color="primary" variant="outlined" fullWidth>
+        <Button onClick={onClose} style = { {color: '#4CAF50',margin: '10px',marginTop:"1px", borderColor: '#4CAF50'}}  color="primary" variant="outlined" fullWidth>
           Close
         </Button>
-        <Button onClick={openUpdateStatusModal} variant="contained" color="primary" fullWidth style = { {color: '#4CAF50',margin: '10px',marginTop:"1px", borderColor: '#4CAF50'}} >
-          Close the Task
-        </Button>
       </DialogActions>
-
-      {isUpdateStatusModalOpen && (
-        <UpdateStatusModal isOpen={isUpdateStatusModalOpen} onClose={closeUpdateStatusModal} complaints={complaints} />
-      )}
     </Dialog>
   );
 };
