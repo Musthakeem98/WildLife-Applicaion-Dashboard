@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import ViewFormModal from './progressComplaints/ViewFormModal';
 import '../../styles/adminofficer.css'
 import ProfileFormModal from '../../components/editProfile/ViewFormModal';
+import ManageOfficers from '../../components/ManageOfficers/ManageOfficers';
 
 const isAuthenticated = () => {
   const userData = sessionStorage.getItem('userData');
@@ -48,6 +49,7 @@ const AdministratorPage: React.FC = () => {
   const router = useRouter();
   const user = getUserData();
   const [isProfileEditEnable, setProfileEditEnable] = useState(false)
+  const [isMnageOfficerEnable, setMnageOfficerEnable] = useState(false)
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
@@ -70,9 +72,18 @@ const AdministratorPage: React.FC = () => {
     setProfileEditEnable(false)
   }
 
+  const manageOfficerClose =() => {
+    setMnageOfficerEnable(false)
+  }
+
   const handleProfileEdit = () => {
     setProfileEditEnable(true)
     console.log("edit profile opened")
+  }
+
+  const ManageOfficersOpen = () => {
+    setMnageOfficerEnable(true)
+    console.log("mange officer opened")
   }
 
   useEffect(() => {
@@ -179,7 +190,7 @@ const AdministratorPage: React.FC = () => {
         </div>
         <div className="action-buttons">
           <button className="profile-edit-button" onClick={() =>handleProfileEdit()}>Profile Edit</button>
-          <button className="manage-officers-button">Manage Officers</button>
+          <button className="manage-officers-button" onClick={() =>ManageOfficersOpen()}>Manage Officers</button>
           <button className="signout-button" onClick={()=> handleSignOut()}>Sign Out</button>
         </div>
       </div>
@@ -244,6 +255,7 @@ const AdministratorPage: React.FC = () => {
       {isModalOpen && <FormModal isOpen={isModalOpen} onClose={closeModal} complaints = {formData} />}
       {isViewOpen && <ViewFormModal isOpen={isViewOpen} onClose={closeViewModel} complaints = {formData} />}
       {isProfileEditEnable && <ProfileFormModal isOpen={isProfileEditEnable} onClose={editviewClose} userData = {userDetails} />}
+      {isMnageOfficerEnable && <ManageOfficers isOpen={isMnageOfficerEnable} onClose={manageOfficerClose} />}
     </div>
   );
   
