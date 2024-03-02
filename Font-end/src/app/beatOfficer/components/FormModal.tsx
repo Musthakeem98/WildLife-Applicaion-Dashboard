@@ -127,12 +127,13 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
         />
       </DialogContent>
       <DialogActions style={{ flexDirection: 'column' }}>
-        <Button onClick={onClose} color="primary" variant="outlined" fullWidth>
-          Close
-        </Button>
-        <Button onClick={openUpdateStatusModal} variant="contained" color="primary" fullWidth style = { {color: '#4CAF50',margin: '10px',marginTop:"1px", borderColor: '#4CAF50'}} >
+      <Button onClick={openUpdateStatusModal} variant="contained" color="primary" fullWidth style = { {backgroundColor: '#4CAF50',margin: '10px',marginTop:"10px", borderColor: '#4CAF50'}} >
           Close the Task
         </Button>
+        <Button onClick={onClose} color="primary" variant="outlined" fullWidth style = { {color: '#4CAF50',margin: '10px',marginTop:"1px", borderColor: '#4CAF50'}}>
+          Close
+        </Button>
+        
       </DialogActions>
 
       {isUpdateStatusModalOpen && (

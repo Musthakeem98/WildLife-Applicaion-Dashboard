@@ -45,7 +45,6 @@
   color: #fff;
 }
 
-
 .spacer {
   width: 4px;
 }
@@ -141,9 +140,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 535.33px; /* Fill */
+  width: 100%; /* Fill */
   height: 120px;
   border-radius: 20px;
+  margin-bottom: 20px;
 }
 .complaint-card-assgine {
   background: linear-gradient(126.97deg, #09380C 28.26%, rgba(4, 48, 6, 0.5) 91.2%);
@@ -152,7 +152,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 535.33px; 
+  width: 100% ;
   border-radius: 20px;
   margin-bottom: 20px;
 }
@@ -225,4 +225,90 @@
 }
 .view-button {
   background-color: #445845;
+}
+
+.assignedcontainer{
+  display: flex; /* Use flexbox layout */
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.assigened-officer{
+  padding-left: 10px;
+  background-color: #4CAF50;
+  border-radius: 5px;
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #fff;
+  padding-right: 10px;
+}
+
+/* Responsive design */
+@media only screen and (max-width: 768px) {
+  .dashboard-container {
+    padding: 10px;
+  }
+
+  .user-greeting {
+    font-size: 24px;
+  }
+
+  .user-role,
+  .user-division {
+    font-size: 18px;
+  }
+
+  .section-heading {
+    font-size: 24px;
+  }
+
+  .complaint-card,
+  .complaint-card-assgine {
+    padding: 20px;
+    height: auto;
+    width: 100%;
+  }
+
+  .complaint-description {
+    font-size: 14px;
+  }
+
+  .action-button {
+    font-size: 8px;
+    padding: 6px 10px;
+    margin-left: 5px;
+  }
+
+  .assign-text,
+  .assigened-officer {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .header-section {
+    margin-bottom: 10px;
+  }
+
+  .filter-section {
+    margin-bottom: 10px;
+  }
+
+  .complaint-card,
+  .complaint-card-assgine {
+    width: 100%;
+  }
+
+  .action-button {
+    width: auto;
+  }
+
+  .assigened-officer {
+    padding: 5px 5px;
+  }
 }

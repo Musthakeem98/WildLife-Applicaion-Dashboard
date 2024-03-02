@@ -8,7 +8,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import UpdateStatusModal from './UpdateStatus'; // Import the new component
-import ShowHistory from './ShowHistory';
 import { Box } from '@mui/material';
 
 interface Complaint {
@@ -127,22 +126,17 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose, complaints}) => 
         />
       </DialogContent>
       <DialogActions style={{ flexDirection: 'column' }}>
+      <Button onClick={openUpdateStatusModal} variant="contained" style = { {backgroundColor: '#4CAF50', borderColor: '#4CAF50', marginBottom: '8px'}} fullWidth >
+          Update Status
+        </Button>
         <Button onClick={onClose} style = { {color: '#4CAF50', borderColor: '#4CAF50'}} variant="outlined" fullWidth>
           Close
         </Button>
-        <Button onClick={openUpdateStatusModal} variant="contained" style = { {color: '#4CAF50', borderColor: '#4CAF50', marginTop: '8px'}} fullWidth >
-          Update Status
-        </Button>
-        <Button onClick={openShowHistoryModal} style = { {color: '#4CAF50', borderColor: '#4CAF50',marginTop: '8px'}} variant="outlined" fullWidth >
-          Show History
-        </Button>
+        
       </DialogActions>
 
       {isUpdateStatusModalOpen && (
         <UpdateStatusModal isOpen={isUpdateStatusModalOpen} onClose={closeUpdateStatusModal} complaints={complaints} />
-      )}
-      {isShowHistoryModalOpen && (
-        <ShowHistory isOpen={isShowHistoryModalOpen} onClose={closeShowHistoryModal} statusHistory={exampleStatusHistory} />
       )}
     </Dialog>
   );

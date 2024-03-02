@@ -28,7 +28,9 @@ const dropdownOptions = [
   { label: 'Option 2', value: 'option2' },
   { label: 'Option 3', value: 'option3' },
 ];
-
+interface AssignedOfficers {
+  [key: string]: string; // Define index signature for string keys and string values
+}
 
 
 const AdministratorPage: React.FC = () => {
@@ -59,6 +61,7 @@ const AdministratorPage: React.FC = () => {
     nic: '',
     officerId: ''
   });
+  const [assignedOfficers, setAssignedOfficers] = useState<AssignedOfficers>({});
 
 
   useEffect(() => {
@@ -96,7 +99,7 @@ const AdministratorPage: React.FC = () => {
         .then((response) => setOpenComplaints(response.data))
         .catch((error) => console.error('Error fetching data:', error));
 
-      Axios.get("http://localhost:3000/complaints/getstate/review")
+      Axios.get("http://localhost:3000/complaints/getstate/close")
         .then((response) => setReviewComplaints(response.data))
         .catch((error) => console.error('Error fetching data:', error));
       
@@ -177,6 +180,33 @@ const AdministratorPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchAssignedOfficers = async () => {
+      const assignedOfficersData = {};
+      for (const complaint of progressComplaints) {
+        const complaintId = complaint.complaintId;
+        try {
+          const response = await Axios.get(`http://localhost:3000/task/getassignedofficer/${complaintId}`);
+          assignedOfficersData[complaintId] = response.data.officerName;
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          assignedOfficersData[complaintId] = 'Error'; // or any default value
+        }
+      }
+      setAssignedOfficers(assignedOfficersData);
+    };
+
+    if (progressComplaints.length > 0) {
+      fetchAssignedOfficers();
+    }
+  }, [progressComplaints]);
+
+  const getAssignedOfficerName = (complaintId: string) => {
+    return assignedOfficers[complaintId] || ''; // Return officer name or empty string if not found
+  };
+  
+
+
   return (
     <div className="dashboard-container">
       <div className="header-section">
@@ -227,7 +257,10 @@ const AdministratorPage: React.FC = () => {
                   </p>
                 </div>
                 <p className="complaint-description">{item.description}</p>
-                <p className='assigened-text'>Assigned To: {item.assignedTo}</p>
+                <div className='assignedcontainer'>
+                  <p className='assigened-text'>Assigned To: </p>
+                  <p className='assigened-officer'>{getAssignedOfficerName(item.complaintId)}</p>
+                </div>
               </div>
               <button onClick={() => viewModelFunction(item)} className="action-button view-button">
                 View

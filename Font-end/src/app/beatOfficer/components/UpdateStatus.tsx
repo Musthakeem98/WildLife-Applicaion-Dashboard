@@ -109,12 +109,11 @@ const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({ isOpen, onClose, 
           variant="contained"
           color="primary"
           fullWidth
-          style={{ marginTop: '8px' }}
+          style = { {backgroundColor: '#4CAF50',margin: '10px',  borderColor: '#4CAF50'}}
         >
           Save Changes
         </Button>
-        <div className="p-1"></div>
-        <Button onClick={onClose} color="primary" variant="outlined" fullWidth>
+        <Button onClick={onClose} color="primary" variant="outlined" fullWidth style = { {color: '#4CAF50',margin: '10px', borderColor: '#4CAF50'}}>
           Close
         </Button>
       </DialogActions>

@@ -107,4 +107,21 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+router.get('/getassignedofficer/:complaineId', async (req, res) => {
+  try {
+    const complaineId = req.params.complaineId;
+    const response = await TaskSchema.findOne({ complainId: complaineId });
+
+    if (response) {
+      res.status(200).json(response);
+    } else {
+      res.status(404).json({ message: "Complaint not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 module.exports = router;

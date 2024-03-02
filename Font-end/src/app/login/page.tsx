@@ -67,7 +67,7 @@ const LoginPage = () => {
       </div>
       <div className="login-form">
         <div className="middle-container">
-        <h1 className="heading">Nice to see you!</h1>
+        <h1 className="heading" style={{color: '#fff'}}>Nice to see you!</h1>
         <p className="sub-heading">Choose your department and enter the credentials:</p>
           <div className="department-buttons">
             <button
@@ -87,7 +87,7 @@ const LoginPage = () => {
               <input value={officerId} onChange={(e) => setOfficerId(e.target.value)} type="text" name="officeId" className="input-field" placeholder="Enter your officer ID" />
               <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" name="password" className="input-field" placeholder="Enter your Password"/>
             <button onClick={() => handleLogin()} type="button" className="login-button">
-              Sigin
+              Sign in
             </button>
             {isMsgShow && (
             <div>
