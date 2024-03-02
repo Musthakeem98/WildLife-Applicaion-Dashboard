@@ -89,9 +89,9 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose }) => {
           <MenuItem value="" disabled>
             
           </MenuItem>
-          <MenuItem value="Admin">Admin</MenuItem>
-          <MenuItem value="Beta">Beta</MenuItem>
-          <MenuItem value="Supervisor">Supervisor</MenuItem>
+          <MenuItem value="admin">Admin</MenuItem>
+          <MenuItem value="beta">Beta</MenuItem>
+          <MenuItem value="supervisor">Supervisor</MenuItem>
         </TextField>
         {!isTypeSelected && (
         <TextField

@@ -112,16 +112,6 @@
   gap: 16px;
 }
 
-.complaints-column {
-  flex-basis: 50%;
-  margin: 0 8px; 
-  background: #00000099;
-  padding: 27px 31px; 
-  border-radius: 20px; 
-  height: 750px;
-  
-}
-
 .section-heading {
   font-size: 1.2rem;
   font-weight: bold;
@@ -131,6 +121,16 @@
   font-family: Roboto;
   font-size: 28px;
   color: #fff;
+}
+
+.complaints-column {
+  flex-basis: 50%;
+  margin: 0 8px; 
+  background: #00000099;
+  padding: 27px 31px; 
+  border-radius: 20px; 
+  height: 750px; /* Change to auto to allow for dynamic height */
+  overflow-y: auto; /* Add overflow-y property to show scrollbar when content exceeds height */
 }
 
 .complaint-card {
@@ -145,6 +145,7 @@
   border-radius: 20px;
   margin-bottom: 20px;
 }
+
 .complaint-card-assgine {
   background: linear-gradient(126.97deg, #09380C 28.26%, rgba(4, 48, 6, 0.5) 91.2%);
   padding: 30px 20px;
@@ -156,6 +157,7 @@
   border-radius: 20px;
   margin-bottom: 20px;
 }
+
 .complaint-details {
   flex-grow: 1;
 }
